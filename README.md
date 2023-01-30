@@ -1,7 +1,8 @@
 # nest-playlist-sync
 
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub latest commit](https://badgen.net/github/last-commit/jyjokokk/nest-playlist-sync)](https://GitHub.com/Naereen/StrapDown.js/commit/)
+[![GitHub last commit](https://img.shields.io/github/last-commit/jyjokokk/nest-playlist-sync)](https://github.com/jyjokokk/nest-playlist-sync)
+
 
 Service for managing and synchronising playlists over different streaming services.
 
