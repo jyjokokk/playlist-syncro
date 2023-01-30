@@ -68,7 +68,6 @@ available, see the [tags on this repository](https://github.com/jyjokokk/nest-pl
 
 - [NestJS][nestjs] - Framework for building efficient, scalable Node.js server-side applications.
 - [nest-commander][nest-commander] - Package that extends NestJS by providing tooling and dependencies for running a NestJS application instance as a CLI application.
-- [SQLite3][sqlite3] - Lightweight local relational database.
 
 ---
 
@@ -78,6 +77,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 [nestjs]: https;//nestjs.com
 [nest-commander]: https://nest-commander.jaymcdoniel.dev/
-[sqlite3]: https://sqlite.org/
 [eslint]: https://eslint.org/
 [prettier]: https://prettier.io/
