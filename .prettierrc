@@ -1,4 +1,8 @@
 {
+  "useTabs": false,
+  "semi": true,
   "singleQuote": true,
-  "trailingComma": "all"
+  "quoteProps": "as-needed",
+  "trailingComma": "all",
+  "bracketSpacing": true
 }

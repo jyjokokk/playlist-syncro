@@ -1,0 +1,7 @@
+.eslintrc.js
+dist/**
+node_modules/**
+test/**
+*.spec.ts
+src/migration/**
+.idea

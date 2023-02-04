@@ -1,0 +1,10 @@
+bin
+deployments
+dist
+sql
+node_modules
+src/migration/**
+.idea
+*.hbs
+*.graphql
+coverage/**

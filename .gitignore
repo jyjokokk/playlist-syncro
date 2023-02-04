@@ -42,7 +42,8 @@ lerna-debug.log*
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -68,3 +69,18 @@ Temporary Items
 *.icloud
 
 # End of https://www.toptal.com/developers/gitignore/api/macos
+
+# Local development environment
+/.env
+/.local/*
+
+# allow .gitkeep files
+!/**/.gitkeep
+
+# yarn.lock
+
+test/coverage
+
+.yarn
+
+
