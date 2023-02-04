@@ -1,10 +1,4 @@
-import { Global, Injectable } from '@nestjs/common';
-import { pickProperties, clone } from './objects.util';
+import { Injectable } from '@nestjs/common';
 
-@Global()
 @Injectable()
-export class UtilsService {
-  clone<T>(obj: T): T {
-    return clone(obj);
-  }
-}
+export class UtilsService {}
