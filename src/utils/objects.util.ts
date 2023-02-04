@@ -1,5 +1,4 @@
 type StringIndexed = { [key: string]: any };
-type NumberIndexed = { [key: number]: any };
 
 export function shallowCopy<T>(obj: T): T {
   const shallowCopy = { ...obj };
@@ -19,9 +18,9 @@ export function deepCopyJson<T>(obj: T): T {
 }
 
 export function pickProperties(
-  obj: StringIndexed | NumberIndexed,
+  obj: StringIndexed,
   ...props: string[]
-) {
+): StringIndexed {
   return props.reduce((result: Object, prop) => {
     result[prop] = obj[prop];
     return result;
