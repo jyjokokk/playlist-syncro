@@ -25,6 +25,7 @@ export const track5 = {
   id: 'trackId5',
   artist: artist2,
   name: 'Second Track a2',
+  length: 210,
 };
 export const track6 = {
   ...track1,
