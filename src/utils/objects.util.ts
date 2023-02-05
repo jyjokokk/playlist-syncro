@@ -60,7 +60,7 @@ export function pickPropertiesDeep(
   return pickProperties(deep, ...props);
 }
 
-export default class ObjectUtils {
+export default class {
   public shallowCopy = shallowCopyObject;
   public clone = cloneObject;
   public copy = copyObject;
