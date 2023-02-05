@@ -22,20 +22,16 @@ export function pickProperties(
   obj: StringIndexed,
   ...props: readonly string[]
 ): StringIndexed;
-
 export function pickProperties(
   obj: NumberIndexed,
   ...props: readonly number[]
 ): StringIndexed;
-
 export function pickProperties(
-  obj: Object,
+  obj: NumberIndexed | StringIndexed,
   ...props: readonly any[]
 ): StringIndexed {
   const isNumlist = props.every((e) => typeof e === 'number');
-  const propsList = isNumlist
-    ? props.map((p: string | number) => `${p}`)
-    : props;
+  const propsList = isNumlist ? props.map((p: number) => p.toString()) : props;
   return propsList.reduce((result: Object, prop) => {
     result[prop] = obj[prop];
     return result;
@@ -68,3 +64,8 @@ export default class {
   public pickProperties = pickProperties;
   public pickPropertiesDeep = pickPropertiesDeep;
 }
+
+const n = [5, 3, 4];
+const s = ['aasd', 'dlfd', 'lla', 'los'];
+n.every((n) => n > 0);
+s.every((s) => s.startsWith('a'));
