@@ -1,8 +1,9 @@
 import {
-  shallowCopy,
-  clone,
-  deepCopyJson,
+  shallowCopyObject,
+  cloneObject,
+  jsonDeepCopyObject,
   pickProperties,
+  pickPropertiesDeep,
 } from './objects.util';
 
 const obj = {
@@ -18,7 +19,7 @@ const obj1 = {
 };
 
 const obj1Shallow = { ...obj1 };
-
+const objNumIndex = { 1: 'lol', 2: 'kek', 3: [{}, {}] };
 const name2 = 'SecondOne';
 const spots = [1, 2, 3];
 
@@ -37,21 +38,21 @@ const obj2 = {
 
 describe('sClone', () => {
   it('should expose a function', () => {
-    expect(shallowCopy).toBeDefined();
+    expect(shallowCopyObject).toBeDefined();
   });
 
   it('returns a shallow copy', () => {
-    const r = shallowCopy(obj1);
+    const r = shallowCopyObject(obj1);
     expect(r).toEqual(obj1Shallow);
   });
 });
 
 describe('clone', () => {
   it('should expose a function', () => {
-    expect(clone).toBeDefined();
+    expect(cloneObject).toBeDefined();
   });
   it('returns a deep copy', () => {
-    const r = clone(obj2);
+    const r = cloneObject(obj2);
     expect(JSON.stringify(r)).toEqual(JSON.stringify(obj2));
     expect(r).not.toBe(obj2);
   });
@@ -59,24 +60,41 @@ describe('clone', () => {
 
 describe('cloneJson', () => {
   it('should expose a function', () => {
-    expect(deepCopyJson).toBeDefined();
+    expect(jsonDeepCopyObject).toBeDefined();
   });
 
   it('cloneJson should return expected output', () => {
-    const r = clone(obj2);
+    const r = cloneObject(obj2);
     expect(JSON.stringify(r)).toEqual(JSON.stringify(obj2));
     expect(r).not.toBe(obj2);
   });
 });
 
-describe('pick', () => {
+describe('pickProperties', () => {
   it('should expose a function', () => {
     expect(pickProperties).toBeDefined();
   });
 
-  it('returns a new object with only the given properties', () => {
+  it('returns an shallow object copy with only the given properties', () => {
     const r = pickProperties(obj, 'name');
     expect(r).toEqual({ name: 'Name One' });
+    const r1 = pickProperties({ 1: 'lol', 2: 'kek', 3: [{}, {}] }, 3, 1);
+    expect(r1).toEqual({ 1: 'lol', 3: [{}, {}] });
+    const r2 = pickProperties(obj2, 'name2', 'spots');
+    expect(r2).toEqual({ name2, spots });
+  });
+});
+
+describe('pickPropertiesDeep', () => {
+  it('should expose a function', () => {
+    expect(pickPropertiesDeep).toBeDefined();
+  });
+
+  it('returns a deep object copy with only the given properties', () => {
+    const r = pickPropertiesDeep(obj, 'name');
+    expect(r).toEqual({ name: 'Name One' });
+    const r1 = pickPropertiesDeep(objNumIndex, 3, 1);
+    expect(r1).toEqual({ 1: 'lol', 3: [{}, {}] });
     const r2 = pickProperties(obj2, 'name2', 'spots');
     expect(r2).toEqual({ name2, spots });
   });
