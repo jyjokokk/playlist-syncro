@@ -75,3 +75,11 @@ export const playlist3 = {
   name: 'Playlist 1',
   tracks: [track6, track2, track5, track3],
 };
+
+export const playlist4 = {
+  id: 'playlistId4',
+  name: 'Playlist 1',
+  tracks: [track6, track2, track7],
+};
+
+export const allPlaylists = [playlist1, playlist2, playlist3, playlist4];
