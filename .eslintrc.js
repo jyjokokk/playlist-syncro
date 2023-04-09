@@ -6,11 +6,11 @@ module.exports = {
     jest: true,
   },
   extends: [
-    'standard-with-typescript',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:@typescript-eslint/strict',
-    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -28,10 +28,11 @@ module.exports = {
     '@typescript-eslint/no-unsafe-argument': 'warn',
     '@typescript-eslint/no-unsafe-assignment': 'warn',
     '@typescript-eslint/no-unsafe-call': 'warn',
+    '@typescript-eslint/prefer-nullish-coalescing': 'off',
     // Leave the rules below as is
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
-    // '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/array-type': 'off',
   },
-};
+}

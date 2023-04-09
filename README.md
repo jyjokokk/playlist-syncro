@@ -3,7 +3,6 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
 [![GitHub last commit](https://img.shields.io/github/last-commit/jyjokokk/nest-playlist-sync)](https://github.com/jyjokokk/nest-playlist-sync/commit/)
 
-
 Service for managing and synchronising playlists over different streaming services.
 
 Written in TypeScript using [NestJS][nestjs], extended with [nest-commander][nest-commander] to provide CLI functionality.

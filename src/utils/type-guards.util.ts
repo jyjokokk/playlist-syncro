@@ -7,8 +7,8 @@ const validArrayTypes = [
   'undefined',
   'object',
   'function',
-] as const;
-type ArrayType = (typeof validArrayTypes)[number];
+] as const
+type ArrayType = (typeof validArrayTypes)[number]
 
 export function isArrayOfType<T>(
   arr: T[],
@@ -16,31 +16,31 @@ export function isArrayOfType<T>(
   checkEmpty: boolean = false,
 ): boolean {
   if (checkEmpty && isEmptyArray(arr)) {
-    return false;
+    return false
   }
   if (!Array.isArray(arr)) {
-    return false;
+    return false
   }
   if (!validArrayTypes.includes(type)) {
-    throw new Error(`${type} is not a valid Array type!`);
+    throw new Error(`${type} is not a valid Array type!`)
   }
   return arr.every((element) => {
-    return typeof element === type;
-  });
+    return typeof element === type
+  })
 }
 
 export function isStringArray<T>(arr: T[]): boolean {
-  return isArrayOfType(arr, 'string');
+  return isArrayOfType(arr, 'string')
 }
 
 export function isNumberArray<T>(arr: T[]): boolean {
-  return isArrayOfType(arr, 'number');
+  return isArrayOfType(arr, 'number')
 }
 
 export function isEmptyArray<T>(arr: T[]): boolean {
-  return arr.length < 1;
+  return arr.length < 1
 }
 
 export function isBooleanArray<T>(arr: T[]): boolean {
-  return isArrayOfType(arr, 'boolean');
+  return isArrayOfType(arr, 'boolean')
 }
