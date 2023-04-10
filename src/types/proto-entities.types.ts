@@ -8,4 +8,6 @@ export interface InstantiatedEntity {
   updatedAt: Date
 }
 
-export type EntityAccessor<T> = (obj: T) => Required<T | InstantiatedEntity>
+export type EntityAccessor<T> = (obj: T) => Required<T & InstantiatedEntity>
+
+export type ReturnedEntity<T> = ReturnType<EntityAccessor<T>>
