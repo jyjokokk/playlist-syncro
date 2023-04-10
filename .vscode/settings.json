@@ -1,9 +1,9 @@
 {
-  "prettier.configPath": "/Users/jyrki/Code/JavaScript/nest-playlist-sync/.prettierrc",
   "js/ts.implicitProjectConfig.target": "ES2017",
   "jest.jestCommandLine": "yarn test",
   "python.terminal.activateEnvironment": false,
   "jest.autoRun": "watch",
   "jest.autoRevealOutput": "on-exec-error",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "prettier.configPath": "/Users/jkoutshine/Code/nest-playlist-sync/.prettierrc"
 }
