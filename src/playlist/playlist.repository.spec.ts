@@ -20,9 +20,16 @@ describe('PlaylistService', () => {
     expect(service).toBeDefined()
   })
 
+  describe('getAll', () => {
+    it('should not be null', () => {
+      const r = service.getAll()
+      expect(r).not.toBeFalsy()
+    })
+  })
+
   describe('CRUD Operations', () => {
     it('should findAll playlists', async () => {
-      const r = await service.findAll()
+      const r = await service.getAll()
       expect(r).toStrictEqual(allPlaylists)
     })
   })

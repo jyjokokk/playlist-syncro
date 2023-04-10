@@ -7,7 +7,7 @@ import { PlaylistService } from './playlist.service'
 @Module({
   imports: [LocalDatabaseApiModule],
   controllers: [PlaylistController],
-  providers: [PlaylistService],
-  exports: [PlaylistRepository, PlaylistService],
+  providers: [PlaylistService, PlaylistRepository],
+  exports: [PlaylistService],
 })
 export class PlaylistModule {}

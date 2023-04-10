@@ -1,16 +1,18 @@
 import { Injectable } from '@nestjs/common'
-import { LocalDatabaseApiService } from '../local-database-api/local-database-api.service'
 import { Playlist } from './playlist.interface'
+import { allPlaylists } from '../constants/testing.const'
 
 @Injectable()
 export class PlaylistRepository {
-  constructor(private readonly localDatabaseAPI: LocalDatabaseApiService) {}
+  private readonly playlists: Playlist[] = allPlaylists
 
-  callApi() {
-    this.localDatabaseAPI.helloDb()
+  getAll(): Playlist[] {
+    return this.playlists
   }
 
-  async findAll(): Promise<Playlist[]> {
-    return this.localDatabaseAPI.findAll('playlists')
+  getById(id: string): Playlist {
+    return this.playlists.find((p) => {
+      return p.id === id
+    })
   }
 }
