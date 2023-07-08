@@ -52,7 +52,7 @@ The project is set to run Prettier to all staged files in a pre-commit hook via 
 
 <!-- ## Deployment
 
-Add additional notes to deploy this on a live system -->
+Add additional notes on deploying this on a live system -->
 
 <!-- ## Contributing
 
