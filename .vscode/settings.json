@@ -5,5 +5,5 @@
   "jest.autoRun": "watch",
   "jest.autoRevealOutput": "on-exec-error",
   "editor.formatOnSave": true,
-  "prettier.configPath": "/Users/jkoutshine/Code/nest-playlist-sync/.prettierrc"
+  "prettier.configPath": ".prettierrc"
 }

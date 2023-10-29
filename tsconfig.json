@@ -15,8 +15,8 @@
     "skipDefaultLibCheck": false,
     "strict": false,
     "paths": {
-      "@outshine/test-util": ["libs/test-util/src"],
-      "@outshine/test-util/*": ["libs/test-util/src/*"]
+      "@tassa_oli_firman_nimi/test-util": ["libs/test-util/src"],
+      "@tassa_oli_firman_nimi/test-util/*": ["libs/test-util/src/*"]
     },
     "noUnusedLocals": true,
     "noUnusedParameters": true

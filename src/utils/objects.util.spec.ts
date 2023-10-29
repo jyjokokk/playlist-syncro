@@ -2,100 +2,121 @@ import {
   shallowCopyObject,
   cloneObject,
   jsonDeepCopyObject,
-  pickProperties,
-  pickPropertiesDeep,
+  pickProperties
 } from './objects.util'
 
-const obj = {
-  id: 1,
+const KEYS = {
+  id: 'id',
+  name: 'name',
+  spots: 'spots',
+  genres: 'genres',
+  category: 'category'
+} as any
+const VALUES = {
+  id: 'id',
   name: 'Name One',
+  spots: [1, 2, 3],
+  genres: ['action', 'fantasy']
+} as any
+const keyList = [KEYS.name, KEYS.id, KEYS.spots]
+
+const firstName = 'Terry'
+const lastName = 'Pratchett'
+const author = {
+  firstName,
+  lastName
 }
+const id = VALUES.id
+const id2 = 'id2'
+const spots = VALUES.spots
+const name = VALUES.name
+const name2 = 'Name two'
+const genres = VALUES.genres
 const category = {
-  genres: ['action', 'fantasy'],
+  genres,
+  author
 }
-const obj1 = {
+
+const obj = {
+  id,
+  name,
+  spots
+}
+const objWithCategory = {
   ...obj,
-  category,
+  category
 }
-
-const obj1Shallow = { ...obj1 }
-const objNumIndex = { 1: 'lol', 2: 'kek', 3: [{}, {}] }
-const name2 = 'SecondOne'
-const spots = [1, 2, 3]
-
+const objWithCategoryShallow = { ...objWithCategory }
 const obj2 = {
-  id: 2,
-  name2,
+  id: id2,
+  name: name2,
   spots,
-  category: {
-    genres: ['action', 'fantasy'],
-    author: {
-      firstName: 'Terry',
-      lastName: 'Pratchett',
-    },
-  },
+  category
 }
 
-describe('sClone', () => {
-  it('should expose a function', () => {
-    expect(shallowCopyObject).toBeDefined()
-  })
+const numericObject = {
+  1: 'one',
+  2: 'two',
+  3: 'three',
+  4: {
+    5: 'five'
+  }
+}
 
+describe('shallowCopy', () => {
   it('returns a shallow copy', () => {
-    const r = shallowCopyObject(obj1)
-    expect(r).toEqual(obj1Shallow)
+    const r = shallowCopyObject(objWithCategory)
+    expect(r).toMatchObject(objWithCategoryShallow)
   })
 })
 
 describe('clone', () => {
-  it('should expose a function', () => {
-    expect(cloneObject).toBeDefined()
-  })
-  it('returns a deep copy', () => {
+  it('returns a deep copy of an object', () => {
     const r = cloneObject(obj2)
-    expect(JSON.stringify(r)).toEqual(JSON.stringify(obj2))
-    expect(r).not.toBe(obj2)
+    expect(r.category).not.toBe(category)
   })
 })
 
-describe('cloneJson', () => {
-  it('should expose a function', () => {
-    expect(jsonDeepCopyObject).toBeDefined()
-  })
-
-  it('cloneJson should return expected output', () => {
-    const r = cloneObject(obj2)
-    expect(JSON.stringify(r)).toEqual(JSON.stringify(obj2))
-    expect(r).not.toBe(obj2)
+describe('jsonDeepCopyObject', () => {
+  it('it should return a copy of an object with plain data fields', () => {
+    const r = jsonDeepCopyObject(obj)
+    expect(r).toStrictEqual({
+      [KEYS.id]: VALUES.id,
+      [KEYS.name]: VALUES.name,
+      [KEYS.spots]: VALUES.spots
+    })
   })
 })
 
 describe('pickProperties', () => {
-  it('should expose a function', () => {
-    expect(pickProperties).toBeDefined()
-  })
-
   it('returns an shallow object copy with only the given properties', () => {
-    const r = pickProperties(obj, 'name')
-    expect(r).toEqual({ name: 'Name One' })
-    const r1 = pickProperties({ 1: 'lol', 2: 'kek', 3: [{}, {}] }, 3, 1)
-    expect(r1).toEqual({ 1: 'lol', 3: [{}, {}] })
-    const r2 = pickProperties(obj2, 'name2', 'spots')
-    expect(r2).toEqual({ name2, spots })
-  })
-})
-
-describe('pickPropertiesDeep', () => {
-  it('should expose a function', () => {
-    expect(pickPropertiesDeep).toBeDefined()
+    const r = pickProperties(obj, KEYS.name, KEYS.id)
+    expect(r).toStrictEqual({ [KEYS.name]: VALUES.name, [KEYS.id]: VALUES.id })
   })
 
-  it('returns a deep object copy with only the given properties', () => {
-    const r = pickPropertiesDeep(obj, 'name')
-    expect(r).toEqual({ name: 'Name One' })
-    const r1 = pickPropertiesDeep(objNumIndex, 3, 1)
-    expect(r1).toEqual({ 1: 'lol', 3: [{}, {}] })
-    const r2 = pickProperties(obj2, 'name2', 'spots')
-    expect(r2).toEqual({ name2, spots })
+  it('works with an array of string keys', () => {
+    const r = pickProperties(obj, keyList)
+    expect(r).toEqual({
+      [KEYS.id]: VALUES.id,
+      [KEYS.name]: VALUES.name,
+      [KEYS.spots]: VALUES.spots
+    })
+  })
+  it('works with an array of numberic keys', () => {
+    const r = pickProperties(numericObject, [1, 2, 3])
+    expect(r).toEqual({
+      1: 'one',
+      2: 'two',
+      3: 'three'
+    })
+  })
+
+  it('works with rest parameter', () => {
+    const r = pickProperties(obj, ...keyList)
+    expect(r).toEqual({
+      [KEYS.id]: VALUES.id,
+      [KEYS.name]: VALUES.name,
+      [KEYS.spots]: VALUES.spots
+    })
   })
 })

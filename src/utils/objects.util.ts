@@ -1,5 +1,5 @@
-type StringIndexed = { [key: string]: any }
-type NumberIndexed = { [key: number]: any }
+export type NativeKeyTypes = string | number | symbol
+export type ObjectKeyTypes<T> = keyof T & NativeKeyTypes
 
 export function shallowCopyObject<T>(obj: T): T {
   const shallowCopy = { ...obj }
@@ -7,65 +7,41 @@ export function shallowCopyObject<T>(obj: T): T {
 }
 
 export function cloneObject<T>(obj: T): T {
-  const deepCopy = structuredClone(obj)
+  const deepCopy = structuredClone(obj) as T
   return deepCopy
 }
 
-export const copyObject = cloneObject
+export function cloneDeep<T>(obj: T): T {
+  Object.keys(obj)
+  return obj
+}
 
 export function jsonDeepCopyObject<T>(obj: T): T {
   const deepCopy = JSON.stringify(obj)
-  return JSON.parse(deepCopy)
+  return JSON.parse(deepCopy) as T
 }
 
-export function pickProperties(
-  obj: StringIndexed,
-  ...props: readonly string[]
-): StringIndexed
-export function pickProperties(
-  obj: NumberIndexed,
-  ...props: readonly number[]
-): StringIndexed
-export function pickProperties(
-  obj: NumberIndexed | StringIndexed,
-  ...props: readonly any[]
-): StringIndexed {
-  const isNumlist = props.every((e) => typeof e === 'number')
-  const propsList = isNumlist ? props.map((p: number) => p.toString()) : props
-  return propsList.reduce((result: Object, prop) => {
-    result[prop] = obj[prop]
-    return result
-  }, {})
+export function pickProperties<T, K extends keyof T>(
+  obj: T,
+  ...keylist: K[] | NativeKeyTypes[]
+): Partial<T>
+export function pickProperties<T, K extends keyof T>(
+  obj: T,
+  keylist: K[] | NativeKeyTypes[]
+): Partial<T>
+export function pickProperties<T, K extends keyof T>(
+  obj: T,
+  ...keylist: K[] | NativeKeyTypes[]
+): Partial<T> {
+  const result: Partial<T> = {}
+  let keyArray = keylist
+  if (keylist.length === 1 && Array.isArray(keylist[0])) {
+    keyArray = keylist[0]
+  }
+  keyArray.forEach((key) => {
+    if (obj.hasOwnProperty(key)) {
+      result[key] = obj[key]
+    }
+  })
+  return result
 }
-
-export function pickPropertiesDeep(
-  obj: StringIndexed,
-  ...props: string[]
-): StringIndexed
-
-export function pickPropertiesDeep(
-  obj: NumberIndexed,
-  ...props: number[]
-): StringIndexed
-
-export function pickPropertiesDeep(
-  obj: Object,
-  ...props: any[]
-): StringIndexed {
-  const deep = cloneObject(obj)
-  return pickProperties(deep, ...props)
-}
-
-export default class {
-  public shallowCopy = shallowCopyObject
-  public clone = cloneObject
-  public copy = copyObject
-  public jsonDeepCopy = jsonDeepCopyObject
-  public pickProperties = pickProperties
-  public pickPropertiesDeep = pickPropertiesDeep
-}
-
-const n = [5, 3, 4]
-const s = ['aasd', 'dlfd', 'lla', 'los']
-n.every((n) => n > 0)
-s.every((s) => s.startsWith('a'))

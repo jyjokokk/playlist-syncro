@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { allPlaylists } from '../constants/testing.const'
+import { Playlist } from '../playlist/playlist.interface'
 
 @Injectable()
 export class LocalDatabaseApiService {
@@ -7,11 +8,13 @@ export class LocalDatabaseApiService {
     console.log('hello local database!')
   }
 
-  private allPlaylists = allPlaylists
+  private cachedDb: { playlists: Playlist[] } = { playlists: allPlaylists }
 
-  private cachedDb = { playlists: this.allPlaylists }
+  findAll<T, K extends keyof T>(db: T, dbRoute: K): T[K] {
+    return db[dbRoute]
+  }
 
-  async findAll(dbRoute: string): Promise<any[]> {
-    return await this.cachedDb[dbRoute]
+  findAllPlaylists(): Playlist[] {
+    return this.findAll(this.cachedDb, 'playlists')
   }
 }

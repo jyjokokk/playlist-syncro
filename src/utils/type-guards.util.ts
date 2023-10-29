@@ -6,14 +6,14 @@ const validArrayTypes = [
   'symbol',
   'undefined',
   'object',
-  'function',
+  'function'
 ] as const
 type ArrayType = (typeof validArrayTypes)[number]
 
 export function isArrayOfType<T>(
   arr: T[],
   type: ArrayType,
-  checkEmpty: boolean = false,
+  checkEmpty = false
 ): boolean {
   if (checkEmpty && isEmptyArray(arr)) {
     return false
