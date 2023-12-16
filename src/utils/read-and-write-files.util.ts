@@ -1,10 +1,10 @@
-import { JSONFile } from '../interfaces/json-file.interface'
+import { JSONFileContent } from '../interfaces/json-file.interface'
 import * as fs from 'fs/promises'
 
-export async function readJSONFile(filePath: string): Promise<JSONFile> {
+export async function readJSONFile(filePath: string): Promise<JSONFileContent> {
   try {
     const fileContent = await fs.readFile(filePath, 'utf8')
-    const jsonData = JSON.parse(fileContent) as JSONFile
+    const jsonData = JSON.parse(fileContent) as JSONFileContent
     return jsonData
   } catch (error) {
     console.error('Error reading JSON file:', error)

@@ -1,5 +1,5 @@
 import { Config } from '../interfaces/config.interface'
-import { JSONFile } from '../interfaces/json-file.interface'
+import { JSONFileContent } from '../interfaces/json-file.interface'
 import { readJSONFile, writeJSONFile } from '../utils/read-and-write-files.util'
 import { Store } from './store.class'
 
@@ -7,11 +7,11 @@ class CentralStore extends Store {
   protected readonly config: Config
   private readonly filePath = this.config.LOCAL_DATABASE_PATH
 
-  async save(data: unknown): Promise<void> {
-    await writeJSONFile(this.filePath, data)
+  async save(data: unknown): Promise<boolean> {
+    return await writeJSONFile(this.filePath, data)
   }
 
-  async getAll(): Promise<JSONFile> {
+  async getAll(): Promise<JSONFileContent> {
     return await readJSONFile(this.filePath)
   }
 

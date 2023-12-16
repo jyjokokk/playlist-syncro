@@ -1,1 +1,11 @@
-export type JSONFile = Record<string, unknown>
+export type JSONFileContent = {
+  [key: string]:
+    | string
+    | number
+    | boolean
+    | null
+    | JSONFileContent
+    | string[]
+    | number[]
+    | boolean[]
+}
