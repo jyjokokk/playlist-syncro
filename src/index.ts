@@ -13,3 +13,5 @@ export const joku = {
 }
 
 console.log('PORT', config.PORT)
+console.log('PORT', config.PORT)
+console.log('JOTAINJOTAINJOTAIN')
