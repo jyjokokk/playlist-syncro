@@ -14,10 +14,9 @@
     }
   },
   "lint-staged": {
-    "*.{ts}": [
+    "*.ts": [
       "pretty-quick --staged",
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "scripts": {
