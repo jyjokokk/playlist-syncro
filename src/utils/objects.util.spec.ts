@@ -18,7 +18,7 @@ const VALUES = {
   spots: [1, 2, 3],
   genres: ['action', 'fantasy']
 } as any
-const keyList = [KEYS.name, KEYS.id, KEYS.spots]
+const keyList = [KEYS.name, KEYS.id, KEYS.spots] as string[]
 
 const firstName = 'Terry'
 const lastName = 'Pratchett'
