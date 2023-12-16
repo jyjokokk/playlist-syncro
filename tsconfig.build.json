@@ -6,7 +6,5 @@
     "dist",
     "**/*spec.ts",
     "migration-datasource.ts"
-  ],
-  "emitDecoratorMetadata": true,
-  "experimentalDecorators": true
+  ]
 }

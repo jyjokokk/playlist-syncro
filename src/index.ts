@@ -1,9 +1,7 @@
-import 'dotenv/config'
-import configService from './config/config.service'
-import repositoryService from './repository/repository.service'
+import app from './app'
 
-const config = configService.getConfig()
-// console.log(config)
-repositoryService.centralStore.save()
+async function bootstrap() {
+  await app.execute()
+}
 
-console.log('PORT', config.PORT)
+void bootstrap()

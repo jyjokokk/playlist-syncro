@@ -5,7 +5,7 @@ export abstract class Store {
     this.connect()
   }
 
-  abstract save(): void
+  abstract save(data: unknown): unknown
   abstract getAll(): unknown
   protected abstract connect(): void
 }

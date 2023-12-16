@@ -1,21 +1,27 @@
 import { Config } from '../interfaces/config.interface'
+import { JSONFile } from '../interfaces/json-file.interface'
+import { readJSONFile, writeJSONFile } from '../utils/read-and-write-files.util'
 import { Store } from './store.class'
 
 class CentralStore extends Store {
   protected readonly config: Config
+  private readonly filePath = this.config.LOCAL_DATABASE_PATH
 
-  save(): void {
-    console.log('save')
+  async save(data: unknown): Promise<void> {
+    await writeJSONFile(this.filePath, data)
   }
 
-  getAll(): string {
-    console.log('getAll')
-    return 'all data'
+  async getAll(): Promise<JSONFile> {
+    return await readJSONFile(this.filePath)
   }
 
-  connect(): void {
-    console.log(this.config.LOCAL_DATABASE_PATH)
-    console.log('connect central store')
+  async connect(): Promise<boolean> {
+    try {
+      await readJSONFile(this.filePath)
+    } catch (err) {
+      console.error('Error in connecting to repository:', err)
+      return false
+    }
   }
 }
 
