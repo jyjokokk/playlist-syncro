@@ -8,8 +8,11 @@ export function add(a: number, b: number): number {
 }
 
 const joku = {
-  a: 'avs',
+a: 'avs',
   bool: true
 }
 
+console.log(   'rumaa koodia', config.IS_LOCAL)
+
+console.log('PORT', config.PORT)
 console.log('PORT', config.PORT)
