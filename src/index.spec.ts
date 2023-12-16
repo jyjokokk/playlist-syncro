@@ -1,5 +1,4 @@
 import { add } from '.'
-// joky
 
 describe('add', () => {
   it('takes two numbers and returns their sum', () => {
@@ -7,3 +6,7 @@ describe('add', () => {
     expect(r).toBe(2)
   })
 })
+
+class lol {
+  KOLA = 'k'
+}

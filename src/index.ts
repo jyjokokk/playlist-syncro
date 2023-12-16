@@ -7,12 +7,9 @@ export function add(a: number, b: number): number {
   return a + b
 }
 
-export const joku = {
+const joku = {
   a: 'avs',
   bool: true
 }
 
 console.log('PORT', config.PORT)
-console.log('PORT', config.PORT)
-console.log('JOTAINJOTAINJOTAIN')
-console.log('JOTAINJOTAINJOTAIN')
