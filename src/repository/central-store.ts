@@ -12,12 +12,12 @@ class CentralStore extends Store {
   }
 
   async getAll(): Promise<JSONFileContent> {
-    return await readJSONFile(this.filePath)
+    return await readJSONFile(this.config.LOCAL_DATABASE_PATH)
   }
 
   async connect(): Promise<boolean> {
     try {
-      await readJSONFile(this.filePath)
+      await readJSONFile(this.config.LOCAL_DATABASE_PATH)
     } catch (err) {
       console.error('Error in connecting to repository:', err)
       return false

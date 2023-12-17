@@ -9,6 +9,8 @@ class ConfigService {
     const IS_PRODUCTION = parseBoolean(process.env.IS_PRODUCTION)
     const HOSTNAME = process.env.HOSTNAME
     const LOCAL_DATABASE_PATH = process.env.LOCAL_DATABASE_PATH
+    const CLIENT_ID = process.env.CLIENT_ID
+    const CLIENT_SECRET = process.env.CLIENT_SECRET
 
     return {
       PORT,
@@ -16,7 +18,9 @@ class ConfigService {
       IS_DEVELOPMENT,
       IS_PRODUCTION,
       HOSTNAME,
-      LOCAL_DATABASE_PATH
+      LOCAL_DATABASE_PATH,
+      CLIENT_ID,
+      CLIENT_SECRET
     }
   }
 }

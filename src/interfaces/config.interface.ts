@@ -5,4 +5,6 @@ export interface Config {
   IS_PRODUCTION: boolean
   HOSTNAME: string
   LOCAL_DATABASE_PATH: string
+  CLIENT_ID: string
+  CLIENT_SECRET: string
 }

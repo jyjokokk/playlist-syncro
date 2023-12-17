@@ -1,12 +1,16 @@
 import configService from './config/config.service'
 import repositoryService from './repository/repository.service'
+import connectionsService from './connections/connections.service'
 
 class App {
   async execute(): Promise<void> {
     const config = configService.getConfig()
-    const r = await repositoryService.centralStore.getAll()
+    const db = await repositoryService.centralStore.getAll()
+
+    // placeholder
+    connectionsService.spotifyConnection.getPlaylistTracks('')
     console.log(config)
-    console.log(r)
+    console.log('DB', db)
   }
 }
 
