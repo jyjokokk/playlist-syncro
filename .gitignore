@@ -86,3 +86,7 @@ test/coverage
 
 .local/
 .eslintcache
+
+**/*.sqlite3
+**/*.db
+**/*.sqlite
