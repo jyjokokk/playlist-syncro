@@ -1,3 +1,4 @@
+import { CONTENT_TYPES } from '../../../constants/request-options.const'
 import { Config } from '../../../interfaces/config.interface'
 import { writeJSONFile } from '../../../utils/read-and-write-files.util'
 import { ServiceConnection } from '../../connection.class'
@@ -7,31 +8,21 @@ export class SpotifyConnection extends ServiceConnection {
   protected readonly config: Config
 
   async requestToken(): Promise<string> {
-    const data = {
-      grant_type: 'client_credentials',
-      client_id: this.config.CLIENT_ID,
-      client_secret: this.config.CLIENT_SECRET
-    }
-    const response = await axios.post(
-      'https://accounts.spotify.com/api/token',
-      data,
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
+    const data = [
+      ['grant_type', 'client_credentials'],
+      ['client_id', this.config.CLIENT_ID],
+      ['client_secret', this.config.CLIENT_SECRET]
+    ]
+    const body = new URLSearchParams(data)
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      body,
+      headers: {
+        'Content-Type': CONTENT_TYPES.APPLICATION.FORM_URLENCODED
       }
-    )
-    // console.log('TOKEN', response.data?.access_token)
-    return response?.data?.access_token as string
-    // apiPost('https://accounts.spotify.com/api/token', )
-    // // return new Promise((resolve, reject) => {
-    // //   console.log('done')
-    // //   resolve('')
-    // //   if (!clientId) {
-    // //     console.log(clientSecret)
-    // //     reject('')
-    // //   }
-    // // })
+    })
+    const r = await response.json()
+    return r.access_token as string
   }
 
   async getUser(token: string): Promise<string> {

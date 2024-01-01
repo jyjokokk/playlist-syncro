@@ -1,11 +1,15 @@
+import { ContentType, Method } from '../constants/request-options.const'
+
 export interface RequestOptions {
-  url?: string
-  method: string
+  endpoint?: string
   mode?: string
   cache?: string
   credentials?: string
-  headers?: Record<string, unknown>
   redirect?: string
   referrerPolicy?: string
   body?: Record<string, unknown>
+  method: Method
+  data?: unknown
+  contentType?: ContentType
+  headerOptions?: HeadersInit
 }

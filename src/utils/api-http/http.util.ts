@@ -1,38 +1,43 @@
 import {
+  type ContentType,
   CONTENT_TYPES,
-  ContentType,
-  METHOD,
-  Method
-} from '../constants/request-options.const'
-
-interface RequestOptions {
-  endpoint: string
-  method: Method
-  data?: unknown
-  contentType?: ContentType
-  headerOptions?: HeadersInit
-}
+  METHOD
+} from '../../constants/request-options.const'
+import { type RequestOptions } from '../../interfaces/request-options.interface'
 
 export class HTTP {
   constructor(private readonly baseUrl = '') {}
 
-  async get(endpoint: string, headerOptions?: HeadersInit): Promise<unknown> {
-    return await this.request({
+  async get<K extends string, V>(
+    endpoint: string,
+    headerOptions?: HeadersInit
+  ): Promise<Record<K, V>> {
+    const r = await this.request({
       endpoint,
       method: METHOD.GET,
       headerOptions
     })
+    return r.json() as Record<K, V>
   }
 
-  async post(endpoint: string, headerOptions?: HeadersInit): Promise<unknown> {
-    return await this.request({
+  //TODO: Better post or request method (so it will handle URLEncoded cases properly)
+  //      - Replace 'data' param for 'request' method with just 'body', handle body
+  //        transformation in the 'post' method
+  async post<K extends string, V>(
+    endpoint: string,
+    data: unknown,
+    headerOptions?: HeadersInit
+  ): Promise<Record<K, V>> {
+    const r = await this.request({
       endpoint,
       method: METHOD.POST,
-      headerOptions
+      headerOptions,
+      data
     })
+    return (await r.json()) as Record<K, V>
   }
 
-  private async request(options: RequestOptions): Promise<unknown> {
+  private async request(options: RequestOptions): Promise<Response> {
     const { endpoint, method, data, contentType, headerOptions } = options
     try {
       const contentOption = this.resolveContentType(contentType)
@@ -46,9 +51,9 @@ export class HTTP {
         body: data ? JSON.stringify(data) : undefined
       })
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
+        console.error(`HTTP error! Status: ${response.status}`)
       }
-      return (await response.json()) as unknown
+      return response
     } catch (error) {
       console.error('Fetch Error:', error)
       throw error
