@@ -1,71 +1,68 @@
-import axios, { AxiosResponse } from 'axios'
-import { ApiResponse } from '../interfaces/api-response.interface'
-import { CONTENT_TYPES, METHOD } from '../constants/request-options.const'
+import {
+  CONTENT_TYPES,
+  ContentType,
+  METHOD,
+  Method
+} from '../constants/request-options.const'
 
-export class http {
-  async get(url: string, options?: RequestInit): Promise<unknown> {
-    const getInit = { method: METHOD.GET, ...options }
-    const response = await fetch(url, getInit)
-    if (!response.ok) {
-      throw new Error(
-        `Error! Request received response with status: ${response.status}`
-      )
-    }
-    return response.json()
-  }
-
-  async post(
-    url: string,
-    data: unknown,
-    options?: RequestInit
-  ): Promise<unknown> {
-    const headers = { 'Content-Type': CONTENT_TYPES.APPLICATION.JSON }
-    const body = JSON.stringify(data)
-    const postOptions = { method: METHOD.POST, body, headers, ...options }
-    const response = await fetch(url, postOptions)
-    if (!response.ok) {
-      throw new Error(
-        `Error! Request received response with status: ${response.status}`
-      )
-    }
-    return response.json()
-  }
+interface RequestOptions {
+  endpoint: string
+  method: Method
+  data?: unknown
+  contentType?: ContentType
+  headerOptions?: HeadersInit
 }
 
-export async function apiGet<T>(endpoint: string): Promise<ApiResponse<T>> {
-  try {
-    // const url = `https://api.example.com/${endpoint}`;
-    const url = `${endpoint}`
-    const response: AxiosResponse<T> = await axios.get(url)
+export class HTTP {
+  constructor(private readonly baseUrl = '') {}
 
-    return {
-      data: response.data,
-      status: response.status
-    }
-  } catch (error) {
-    console.error('Error in GET request', error)
-    throw error
-  }
-}
-
-export async function apiPost<T>(
-  endpoint: string,
-  data: unknown
-): Promise<ApiResponse<T>> {
-  try {
-    const url = `${endpoint}`
-    const response: AxiosResponse<T> = await axios.post(url, data, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
+  async get(endpoint: string, headerOptions?: HeadersInit): Promise<unknown> {
+    return await this.request({
+      endpoint,
+      method: METHOD.GET,
+      headerOptions
     })
+  }
 
-    return {
-      data: response.data,
-      status: response.status
+  async post(endpoint: string, headerOptions?: HeadersInit): Promise<unknown> {
+    return await this.request({
+      endpoint,
+      method: METHOD.POST,
+      headerOptions
+    })
+  }
+
+  private async request(options: RequestOptions): Promise<unknown> {
+    const { endpoint, method, data, contentType, headerOptions } = options
+    try {
+      const contentOption = this.resolveContentType(contentType)
+      const headers = {
+        ...contentOption,
+        ...headerOptions
+      }
+      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+        method,
+        headers,
+        body: data ? JSON.stringify(data) : undefined
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+      return (await response.json()) as unknown
+    } catch (error) {
+      console.error('Fetch Error:', error)
+      throw error
     }
-  } catch (error) {
-    console.error('Error in GET request', error)
-    throw error
+  }
+
+  private resolveContentType(contentType: ContentType): {
+    'Content-Type': ContentType
+  } {
+    if (!contentType) {
+      return { 'Content-Type': CONTENT_TYPES.APPLICATION.JSON }
+    }
+    return {
+      'Content-Type': contentType
+    }
   }
 }

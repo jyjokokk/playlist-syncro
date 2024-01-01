@@ -15,11 +15,17 @@ export const CONTENT_TYPES = {
     PLAIN: 'text/plain',
     XML: 'text/xml'
   }
-}
+} as const
+
+export type ContentType =
+  | (typeof CONTENT_TYPES.APPLICATION)[keyof typeof CONTENT_TYPES.APPLICATION]
+  | (typeof CONTENT_TYPES.TEXT)[keyof typeof CONTENT_TYPES.TEXT]
 
 export const METHOD = {
   GET: 'GET',
   POST: 'POST',
   PUT: 'PUT',
   DELETE: 'DELETE'
-}
+} as const
+
+export type Method = keyof typeof METHOD
