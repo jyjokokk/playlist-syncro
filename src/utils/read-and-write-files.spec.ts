@@ -47,7 +47,7 @@ describe('writeJSONFile', () => {
   })
   it('handles errors', async () => {
     const expectedError = new Error(
-      `Error: EACCES: permission denied, open '${filePath}`
+      `Error: EACCES: permission denied, open '${filePath}'`
     )
     ;(
       fs.writeFile as jest.MockedFunction<typeof fs.writeFile>
