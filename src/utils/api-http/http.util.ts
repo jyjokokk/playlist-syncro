@@ -1,7 +1,6 @@
 import { CONTENT_TYPES, METHOD } from '../../constants/request-options.const'
 import {
   HTTPGetProps,
-  HTTPPostFormProps,
   HTTPPostProps,
   HeaderTypes
 } from '../../interfaces/http-props.interface'

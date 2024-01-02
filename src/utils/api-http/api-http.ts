@@ -23,7 +23,7 @@ export abstract class ApiHTTP {
     return r
   }
 
-  async post({ endpoint, data, variables }: Props): Promise<any> {
+  async post<T>({ endpoint, data, variables }: Props): Promise<T> {
     const { http } = this.dependencies
     const url = this.resolveUrl(endpoint)
     const r: any = await http.post({
@@ -31,10 +31,10 @@ export abstract class ApiHTTP {
       params: variables,
       data
     })
-    return r
+    return r as T
   }
 
   protected resolveUrl(endpoint: string): string {
-    return `${this.baseUrl}/${endpoint}`
+    return `${this.baseUrl}${endpoint}`
   }
 }

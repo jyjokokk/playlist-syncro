@@ -7,18 +7,18 @@ export class ApiSpotify extends ApiHTTP {
   private readonly config = configService.getConfig()
 
   async getToken(): Promise<AccessTokenResponse> {
-    const data = [
-      ['grant_type', 'client_credentials'],
-      ['client_id', this.config.CLIENT_ID],
-      ['client_secret', this.config.CLIENT_SECRET]
-    ]
-    return (await this.post({
+    const data = {
+      grant_type: 'client_credentials',
+      client_id: this.config.CLIENT_ID,
+      client_secret: this.config.CLIENT_SECRET
+    }
+    return await this.post<AccessTokenResponse>({
       endpoint: 'https://accounts.spotify.com/api/token',
+      data,
       variables: {
-        'Content-Type': CONTENT_TYPES.APPLICATION.FORM_URLENCODED,
-        data
+        'Content-Type': CONTENT_TYPES.APPLICATION.FORM_URLENCODED
       }
-    })) as AccessTokenResponse
+    })
   }
 }
 
