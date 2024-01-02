@@ -25,4 +25,5 @@ class ConfigService {
   }
 }
 
+// TODO: export just the output of getConfig()
 export default new ConfigService()

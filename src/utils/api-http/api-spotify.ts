@@ -13,6 +13,7 @@ export class ApiSpotify extends ApiHTTP {
       client_secret: this.config.CLIENT_SECRET
     }
     return await this.post<AccessTokenResponse>({
+      // TODO: Endpoints to their own const file
       endpoint: 'https://accounts.spotify.com/api/token',
       data,
       variables: {

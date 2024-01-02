@@ -20,10 +20,9 @@ export class SpotifyConnection extends ServiceConnection {
           Authorization
         }
       })
-      console.log(r.data)
       return r?.data?.id as string
     } catch (error) {
-      console.log('fail')
+      console.log('getUser failed:', error)
     }
   }
 
@@ -41,11 +40,5 @@ export class SpotifyConnection extends ServiceConnection {
       }
     )
     await writeJSONFile(this.config.LOCAL_DATABASE_PATH, playlists.data)
-  }
-
-  async plWrapper(): Promise<void> {
-    const token = await this.requestToken()
-    console.log('TOKEN', token)
-    await this.getUser(token)
   }
 }
