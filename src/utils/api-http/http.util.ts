@@ -1,73 +1,82 @@
+import { CONTENT_TYPES, METHOD } from '../../constants/request-options.const'
 import {
-  type ContentType,
-  CONTENT_TYPES,
-  METHOD
-} from '../../constants/request-options.const'
-import { type RequestOptions } from '../../interfaces/request-options.interface'
+  HTTPGetProps,
+  HTTPPostFormProps,
+  HTTPPostProps,
+  HeaderTypes
+} from '../../interfaces/http-props.interface'
+import { UriEncodeObject } from '../url-encode.util'
 
 export class HTTP {
-  constructor(private readonly baseUrl = '') {}
-
-  async get<K extends string, V>(
-    endpoint: string,
-    headerOptions?: HeadersInit
-  ): Promise<Record<K, V>> {
-    const r = await this.request({
-      endpoint,
-      method: METHOD.GET,
-      headerOptions
-    })
-    return r.json() as Record<K, V>
-  }
-
-  //TODO: Better post or request method (so it will handle URLEncoded cases properly)
-  //      - Replace 'data' param for 'request' method with just 'body', handle body
-  //        transformation in the 'post' method
-  async post<K extends string, V>(
-    endpoint: string,
-    data: unknown,
-    headerOptions?: HeadersInit
-  ): Promise<Record<K, V>> {
-    const r = await this.request({
-      endpoint,
-      method: METHOD.POST,
-      headerOptions,
-      data
-    })
-    return (await r.json()) as Record<K, V>
-  }
-
-  private async request(options: RequestOptions): Promise<Response> {
-    const { endpoint, method, data, contentType, headerOptions } = options
+  async get<T>({ url, params }: HTTPGetProps): Promise<T | Response> {
+    const headers: HeadersInit = { ...this.doHeaders(params) }
+    const method = METHOD.GET
     try {
-      const contentOption = this.resolveContentType(contentType)
-      const headers = {
-        ...contentOption,
-        ...headerOptions
-      }
-      const response = await fetch(`${this.baseUrl}${endpoint}`, {
-        method,
-        headers,
-        body: data ? JSON.stringify(data) : undefined
-      })
+      const response = await fetch(url, { method, headers })
       if (!response.ok) {
-        console.error(`HTTP error! Status: ${response.status}`)
+        throw new Error(`HTTP Error: ${response.status}`)
       }
-      return response
+      return await response.json()
     } catch (error) {
-      console.error('Fetch Error:', error)
+      console.error('Fetch error:', error)
       throw error
     }
   }
 
-  private resolveContentType(contentType: ContentType): {
-    'Content-Type': ContentType
-  } {
-    if (!contentType) {
-      return { 'Content-Type': CONTENT_TYPES.APPLICATION.JSON }
+  async post<T>({ url, data, params }: HTTPPostProps): Promise<T | Response> {
+    const headers: HeadersInit = { ...this.doHeaders(params) }
+    const method = METHOD.POST
+    const body = this.resolveBody(params, data)
+    try {
+      const response = await fetch(url, {
+        method,
+        headers,
+        body
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`)
+      }
+      return await response.json()
+    } catch (error) {
+      console.error('Fetch error:', error)
+      throw error
     }
-    return {
-      'Content-Type': contentType
+  }
+
+  private doHeaders(params: HeaderTypes): HeaderTypes {
+    if (!params || !params['Content-Type']) {
+      return {
+        ...params,
+        'Content-Type': CONTENT_TYPES.APPLICATION.JSON
+      }
+    }
+    const cType = params['Content-Type']
+    if (cType) {
+      return {
+        ...params,
+        'Content-Type': cType
+      }
+    }
+  }
+
+  private resolveBody(params: HeaderTypes, body: any): BodyInit {
+    const contentType = params
+      ? params['Content-Type']
+      : CONTENT_TYPES.APPLICATION.JSON
+    switch (contentType) {
+      case CONTENT_TYPES.APPLICATION.JSON:
+        return JSON.stringify(body)
+      case CONTENT_TYPES.APPLICATION.FORM_URLENCODED:
+        if (typeof body === 'string') {
+          return body
+        }
+        if (Array.isArray(body)) {
+          return new URLSearchParams(body)
+        }
+        return UriEncodeObject(body)
     }
   }
 }
+
+const http = new HTTP()
+export default http

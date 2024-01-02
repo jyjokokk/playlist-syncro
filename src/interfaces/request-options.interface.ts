@@ -1,5 +1,9 @@
 import { ContentType, Method } from '../constants/request-options.const'
 
+export type HeaderDefault =
+  | Record<string, string>
+  | Record<'Content-Type', ContentType>
+
 export interface RequestOptions {
   endpoint?: string
   mode?: string
@@ -7,9 +11,9 @@ export interface RequestOptions {
   credentials?: string
   redirect?: string
   referrerPolicy?: string
-  body?: Record<string, unknown>
+  body?: string
   method: Method
   data?: unknown
   contentType?: ContentType
-  headerOptions?: HeadersInit
+  headers?: HeaderDefault
 }

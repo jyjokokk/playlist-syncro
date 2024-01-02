@@ -1,4 +1,4 @@
-import { urlencodeObject } from './url-encode.util'
+import { UriEncodeObject } from './url-encode.util'
 
 const object1 = {
   client_id: 'alfa1234',
@@ -15,17 +15,17 @@ const object3 = {
 
 describe('urlencodeObject', () => {
   it('urlencoded alphanumeric keys and values of an object', () => {
-    const r = urlencodeObject(object1)
+    const r = UriEncodeObject(object1)
     expect(r).toStrictEqual('client_id=alfa1234&client_name=new_user')
   })
   it('handles spaces and other special characters', () => {
-    const r = urlencodeObject(object2)
+    const r = UriEncodeObject(object2)
     expect(r).toStrictEqual(
       'str_with_space=two%20spaces%20here&with_numbers=1%20with%202%20numbers'
     )
   })
   it('handles numbers', () => {
-    const r = urlencodeObject(object3)
+    const r = UriEncodeObject(object3)
     expect(r).toStrictEqual('numbers=10&string=words')
   })
 })
