@@ -1,81 +1,40 @@
-import { CONTENT_TYPES, METHOD } from '../../constants/request-options.const'
-import {
-  HTTPGetProps,
-  HTTPPostProps,
-  HeaderTypes
-} from '../../interfaces/http-props.interface'
-import { UriEncodeObject } from '../url-encode.util'
+const dependencies = {
+  fetch
+}
+type Depencies = typeof dependencies
 
 export class HTTP {
-  async get<T>({ url, params }: HTTPGetProps): Promise<T | Response> {
-    const headers: HeadersInit = { ...this.doHeaders(params) }
-    const method = METHOD.GET
+  constructor(private dependencies: Depencies) {}
+
+  async get(url: string): Promise<any> {
+    const { fetch } = this.dependencies
     try {
-      const response = await fetch(url, { method, headers })
-      if (!response.ok) {
-        throw new Error(`HTTP Error: ${response.status}`)
-      }
-      return await response.json()
+      const response = await fetch(url)
+      const data = await response.json()
+      return data
     } catch (error) {
-      console.error('Fetch error:', error)
+      console.error('Error occurred while making GET request:', error)
       throw error
     }
   }
 
-  async post<T>({ url, data, params }: HTTPPostProps): Promise<T | Response> {
-    const headers: HeadersInit = { ...this.doHeaders(params) }
-    const method = METHOD.POST
-    const body = this.resolveBody(params, data)
+  async post(url: string, body: Record<string, unknown>): Promise<any> {
+    const { fetch } = this.dependencies
     try {
       const response = await fetch(url, {
-        method,
-        headers,
-        body
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
       })
-      if (!response.ok) {
-        throw new Error(`HTTP Error: ${response.status}`)
-      }
-      return await response.json()
+      const data = await response.json()
+      return data
     } catch (error) {
-      console.error('Fetch error:', error)
+      console.error('Error occurred while making POST request:', error)
       throw error
-    }
-  }
-
-  private doHeaders(params: HeaderTypes): HeaderTypes {
-    if (!params || !params['Content-Type']) {
-      return {
-        ...params,
-        'Content-Type': CONTENT_TYPES.APPLICATION.JSON
-      }
-    }
-    const cType = params['Content-Type']
-    if (cType) {
-      return {
-        ...params,
-        'Content-Type': cType
-      }
-    }
-  }
-
-  private resolveBody(params: HeaderTypes, body: any): BodyInit {
-    const contentType = params
-      ? params['Content-Type']
-      : CONTENT_TYPES.APPLICATION.JSON
-    switch (contentType) {
-      case CONTENT_TYPES.APPLICATION.JSON:
-        return JSON.stringify(body)
-      case CONTENT_TYPES.APPLICATION.FORM_URLENCODED:
-        if (typeof body === 'string') {
-          return body
-        }
-        if (Array.isArray(body)) {
-          return new URLSearchParams(body)
-        }
-        return UriEncodeObject(body)
     }
   }
 }
 
-const http = new HTTP()
-export default http
+export default new HTTP(dependencies)

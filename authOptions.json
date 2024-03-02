@@ -1,0 +1,13 @@
+{
+  "url": "https://accounts.spotify.com/api/token",
+  "form": {
+    "code": "AQBrIRxCYPZlCU-SfCV2OBVVvW1XegcVu8MIKGNy-AlKEl8mjcfZqIqj9rCgnnnJZU_6hoyRXBnxcjigWRMFjMx7AqNs2EjJV-NuKRdtFynLJ5yIMdka56QDhQog2VftCrJd3gv2DqgjAbGS8hnQgMqNL9qdhbR_Opv-UzmJKDmdNOs0xeiiYP4t89ayLbBgIKWA4hLocutT40Yq8pYBjrGSG_eWmA",
+    "redirect_uri": "http%3A%2F%2Flocalhost%3A3030%2Fcallback",
+    "grant_type": "authorization_code"
+  },
+  "headers": {
+    "content-type": "application/x-www-form-urlencoded",
+    "Authorization": "Basic OTE2MzVlYTlmNDdmNDZlY2JkNjVlOTRmZGZmYmZlNjQ6MjM2N2UyMjI2NWJkNDYyY2JjODEyM2QyMjE1YTI5ZDA="
+  },
+  "json": true
+}

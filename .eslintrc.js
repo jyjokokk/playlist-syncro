@@ -32,6 +32,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/array-type': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
     // '@typescript-eslint/no-extraneous-class': ['warn', {'allowEmpty':}],
     '@typescript-eslint/no-extraneous-class': 'off'
     // 'prettier/prettier': 1

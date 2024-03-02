@@ -15,7 +15,7 @@ export interface HTTPGetProps {
 }
 
 export interface HTTPPostProps extends HTTPGetProps {
-  data: any
+  body: unknown
 }
 
 export interface HTTPPostFormProps extends HTTPGetProps {
