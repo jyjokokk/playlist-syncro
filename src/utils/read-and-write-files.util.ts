@@ -1,4 +1,4 @@
-import { JSONFileContent } from '../interfaces/json-file.interface'
+import { JSONFileContent } from './types/json-file.interface'
 import * as fs from 'fs/promises'
 
 export async function readJSONFile(filePath: string): Promise<JSONFileContent> {

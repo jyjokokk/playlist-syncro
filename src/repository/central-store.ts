@@ -1,14 +1,19 @@
-import { Config } from '../interfaces/config.interface'
-import { JSONFileContent } from '../interfaces/json-file.interface'
+import { JSONFileContent } from '../utils/types/json-file.interface'
 import { readJSONFile, writeJSONFile } from '../utils/read-and-write-files.util'
 import { Store } from './store.class'
+import { ConfigService } from '../config/config-service.interface'
+import { ConfigLiterals } from '../utils/types/config.interface'
 
 class CentralStore extends Store {
-  protected readonly config: Config
-  private readonly filePath = this.config.LOCAL_DATABASE_PATH
+  private readonly config: ConfigLiterals
+
+  constructor(readonly configService: ConfigService) {
+    super(configService)
+    this.config = this.configService.getConfig()
+  }
 
   async save(data: unknown): Promise<boolean> {
-    return await writeJSONFile(this.filePath, data)
+    return await writeJSONFile(this.config.LOCAL_DATABASE_PATH, data)
   }
 
   async getAll(): Promise<JSONFileContent> {

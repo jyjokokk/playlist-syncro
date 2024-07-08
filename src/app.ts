@@ -1,58 +1,31 @@
-import configService from './config/config.service'
 import repositoryService from './repository/repository.service'
-import connectionsService from './connections/connections.service'
-import { isProduction } from './utils/environments.util'
-import express from 'express'
-import { writeJSONFile } from './utils/read-and-write-files.util'
-import http from './utils/api-http/http.util'
+import express, { type Request, type Response } from 'express'
+import apiSpotify from './utils/api-http/api-spotify'
 
 class App {
   async execute(): Promise<void> {
-    const config = configService.getConfig()
-    const db = await repositoryService.centralStore.getAll()
-    console.log(config)
-    console.log('DB', db)
+    const db = await repositoryService.repositoryStore.getAll()
+    // console.log('DB', db)
 
     const app = express()
-    app.get('/login', function (_, res): void {
-      const redir = 'http://localhost:3030/callback'
-      const url = `https://accounts.spotify.com/authorize?client_id=91635ea9f47f46ecbd65e94fdffbfe64&response_type=code&redirect_uri=${redir}&scope=user-read-private%20user-read-email&state=1232145`
-
-      res.redirect(url)
-    })
-
-    app.get('/callback', async function (req, res): Promise<void> {
-      const code = req.query.code || null
-      const redir = encodeURIComponent('http://localhost:3030/callback')
-      const authOptions = {
-        url: 'https://accounts.spotify.com/api/token',
-        form: {
-          code: code,
-          redirect_uri: redir,
-          grant_type: 'authorization_code'
-        },
-        headers: {
-          'content-type': 'application/x-www-form-urlencoded',
-
-          Authorization:
-            'Basic ' +
-            Buffer.from(config.CLIENT_ID + ':' + config.CLIENT_SECRET).toString(
-              'base64'
-            )
-        },
-
-        json: true
+    app.get(
+      '/login',
+      async function (_req: Request, res: Response): Promise<void> {
+        const token = await apiSpotify.getToken()
+        // console.log('TOKEN', token)
+        await repositoryService.repositoryStore.save(token)
+        res.redirect('/callback')
       }
-      await writeJSONFile('authOptions.json', authOptions)
-      await http.post(authOptions.url, authOptions.form)
-      res.json(authOptions)
-      return null
+    )
+
+    app.get('/callback', async function (_req, res): Promise<void> {
+      const trackId = '2TpxZ7JUBn3uw46aR7qd6V'
+      const trackData = await apiSpotify.getTrack(db?.access_token, trackId)
+      // console.log('TRACK_DATA', trackData)
+      res.statusCode = 200
+      // res.json(trackData)
+      res.send(trackData)
     })
-    if (isProduction()) {
-      connectionsService.spotifyConnection.getPlaylistTracks('')
-      const r = await connectionsService.spotifyConnection.requestToken()
-      console.log('TOUKKA', r)
-    }
     app.listen(3030)
   }
 }

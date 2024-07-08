@@ -1,6 +1,10 @@
 import { parseBoolean } from './parseBoolean.util'
 
 describe('parseBoolean', () => {
+  it('returns false if input is empty string', () => {
+    const r = parseBoolean('')
+    expect(r).toBe(false)
+  })
   it('returns true if input is string for true', () => {
     const r = parseBoolean('true')
     expect(r).toBe(true)

@@ -1,11 +1,11 @@
-import { Config } from '../../../interfaces/config.interface'
+import { ConfigLiterals } from '../../../utils/types/config.interface'
 import apiSpotify from '../../../utils/api-http/api-spotify'
 import { writeJSONFile } from '../../../utils/read-and-write-files.util'
 import { ServiceConnection } from '../../connection.class'
 import axios from 'axios'
 
 export class SpotifyConnection extends ServiceConnection {
-  protected readonly config: Config
+  protected readonly config: ConfigLiterals
 
   async requestToken(): Promise<string> {
     const r = await apiSpotify.getToken()

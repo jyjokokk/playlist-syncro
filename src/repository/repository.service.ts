@@ -1,10 +1,12 @@
-import configService from '../config/config.service'
+import { ConfigService } from '../config/config-service.interface'
 import CentralStore from './central-store'
+import configService from '../config/config.service'
 
 class RepositoryService {
-  readonly config = configService.getConfig()
-
-  centralStore = new CentralStore(this.config)
+  readonly repositoryStore = null
+  constructor(configService: ConfigService) {
+    this.repositoryStore = new CentralStore(configService)
+  }
 }
 
-export default new RepositoryService()
+export default new RepositoryService(configService)

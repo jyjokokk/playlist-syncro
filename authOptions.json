@@ -1,7 +1,7 @@
 {
   "url": "https://accounts.spotify.com/api/token",
   "form": {
-    "code": "AQBrIRxCYPZlCU-SfCV2OBVVvW1XegcVu8MIKGNy-AlKEl8mjcfZqIqj9rCgnnnJZU_6hoyRXBnxcjigWRMFjMx7AqNs2EjJV-NuKRdtFynLJ5yIMdka56QDhQog2VftCrJd3gv2DqgjAbGS8hnQgMqNL9qdhbR_Opv-UzmJKDmdNOs0xeiiYP4t89ayLbBgIKWA4hLocutT40Yq8pYBjrGSG_eWmA",
+    "code": "AQB4M2BhV4JWbKwW7mticQjQCfuvynpAGQ97DPRvmXBdGBIbua9ZKTo21xCZeZNgAKCyZpR4RVkXk3cDUKSgb2pFXdzPqm7SzRpNk2nO4xCpRAx8F7oX32p9yMXPSLB8Ah0UJTc0582MOQlx9wLOxaANj_eu95GL-JBYxmil7Pw2fCFrYqxYcfZ-FP0YzDgu0IpufOzvZPz0N9r-g3m5R3Tnl3p3MQ",
     "redirect_uri": "http%3A%2F%2Flocalhost%3A3030%2Fcallback",
     "grant_type": "authorization_code"
   },

@@ -1,7 +1,7 @@
-import { Config } from '../interfaces/config.interface'
+import { ConfigLiterals } from '../utils/types/config.interface'
 
 export abstract class ServiceConnection {
-  constructor(protected readonly config: Config) {}
+  constructor(protected readonly config: ConfigLiterals) {}
 
   abstract requestToken(clientId: string, clientSecret: string): Promise<string>
   abstract getPlaylistTracks(playlistId: string): unknown

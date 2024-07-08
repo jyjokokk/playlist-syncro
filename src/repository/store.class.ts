@@ -1,8 +1,8 @@
-import { Config } from '../interfaces/config.interface'
-import { JSONFileContent } from '../interfaces/json-file.interface'
+import { type ConfigService } from '../config/config-service.interface'
+import { JSONFileContent } from '../utils/types/json-file.interface'
 
 export abstract class Store {
-  constructor(protected readonly config: Config) {}
+  constructor(protected readonly configService: ConfigService) {}
 
   abstract save(data: JSONFileContent): Promise<boolean>
   abstract getAll(): Promise<JSONFileContent>

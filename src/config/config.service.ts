@@ -1,8 +1,15 @@
-import { Config } from '../interfaces/config.interface'
 import { parseBoolean } from '../utils/parseBoolean.util'
+import { type ConfigLiterals } from '../utils/types/config.interface'
+import { ConfigService } from './config-service.interface'
 
-class ConfigService {
-  getConfig(): Config {
+class ConfigStoreService implements ConfigService {
+  private config: ConfigLiterals
+
+  constructor() {
+    this.config = this.readConfig()
+  }
+
+  private readConfig(): ConfigLiterals {
     const PORT = parseInt(process.env.PORT)
     const IS_LOCAL = parseBoolean(process.env.IS_LOCAL)
     const IS_DEVELOPMENT = parseBoolean(process.env.IS_DEVELOPMENT)
@@ -11,6 +18,7 @@ class ConfigService {
     const LOCAL_DATABASE_PATH = process.env.LOCAL_DATABASE_PATH
     const CLIENT_ID = process.env.CLIENT_ID
     const CLIENT_SECRET = process.env.CLIENT_SECRET
+    const ACCESS_TOKEN = process.env.ACCESS_TOKEN
 
     return {
       PORT,
@@ -20,10 +28,17 @@ class ConfigService {
       HOSTNAME,
       LOCAL_DATABASE_PATH,
       CLIENT_ID,
-      CLIENT_SECRET
+      CLIENT_SECRET,
+      ACCESS_TOKEN
     }
+  }
+
+  public getConfig(key?: string): ConfigLiterals {
+    if (key) {
+      return this.config[key]
+    }
+    return this.config
   }
 }
 
-// TODO: export just the output of getConfig()
-export default new ConfigService()
+export default new ConfigStoreService()

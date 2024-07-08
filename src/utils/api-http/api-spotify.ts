@@ -1,28 +1,37 @@
+import { AccessTokenResponse } from '../types/auth.interface'
+import { CONTENT_TYPES } from '../constants/content-types.cont'
+import { ApiHTTP } from '../api/api-http'
 import configService from '../../config/config.service'
-import { CONTENT_TYPES } from '../../constants/request-options.const'
-import { AccessTokenResponse } from '../../interfaces/auth.interface'
-import { ApiHTTP } from './api-http'
 
 export class ApiSpotify extends ApiHTTP {
-  private readonly config = configService.getConfig()
+  constructor() {
+    super()
+  }
 
   async getToken(): Promise<AccessTokenResponse> {
+    const { CLIENT_ID, CLIENT_SECRET } = configService.getConfig()
+    const url = 'https://accounts.spotify.com/api/token'
     const data = {
       grant_type: 'client_credentials',
-      client_id: this.config.CLIENT_ID,
-      client_secret: this.config.CLIENT_SECRET
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET
     }
-    return await this.post<AccessTokenResponse>({
-      // TODO: Endpoints to their own const file
-      endpoint: 'https://accounts.spotify.com/api/token',
-      data,
-      variables: {
-        'Content-Type': CONTENT_TYPES.APPLICATION.FORM_URLENCODED
-      }
+    const response = await this.post({
+      url,
+      variables: data,
+      contentType: CONTENT_TYPES.APPLICATION.FORM_URLENCODED
     })
+    return response
+  }
+
+  async getTrack(accessToken: string, id: string): Promise<any> {
+    const url = `https://api.spotify.com/v1/tracks/${id}`
+    const response = await this.get({
+      url,
+      variables: { accessToken }
+    })
+    return response
   }
 }
 
-const apiSpotify = new ApiSpotify()
-
-export default apiSpotify
+export default new ApiSpotify()
