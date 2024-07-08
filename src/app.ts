@@ -33,6 +33,7 @@ class App {
         },
         headers: {
           'content-type': 'application/x-www-form-urlencoded',
+
           Authorization:
             'Basic ' +
             Buffer.from(config.CLIENT_ID + ':' + config.CLIENT_SECRET).toString(
@@ -42,13 +43,10 @@ class App {
 
         json: true
       }
-      console.log(authOptions)
       await writeJSONFile('authOptions.json', authOptions)
-      const headers: any = authOptions.headers
-      await http.post({ url: authOptions.url, data: authOptions.form })
+      await http.post(authOptions.url, authOptions.form)
       res.json(authOptions)
       return null
-      // }
     })
     if (isProduction()) {
       connectionsService.spotifyConnection.getPlaylistTracks('')
