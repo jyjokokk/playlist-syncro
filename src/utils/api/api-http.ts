@@ -14,7 +14,11 @@ export abstract class ApiHTTP {
 
   async post({ url, variables, contentType }: ApiProps): Promise<any> {
     const { http } = this.dependencies
-    const r: any = await http.post({ url, body: variables, contentType })
+    const r: any = await http.post({
+      url,
+      body: variables,
+      params: { contentType }
+    })
     return r
   }
 

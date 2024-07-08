@@ -29,7 +29,7 @@ export class HTTP {
     const { url, body, params } = payload
     const headers = this.constructHeaders(params)
     try {
-      const response = await httpClient.post(url, body, headers)
+      const response = await httpClient.post(url, body, { headers })
       return response.data
     } catch (error) {
       return this.handleError(error)
@@ -43,7 +43,10 @@ export class HTTP {
 
   constructHeaders(params: HeaderParams): Record<string, string> {
     const headers = {
-      'Content-Type': params?.contentType || 'application/json'
+      'Content-Type': 'application/json'
+    }
+    if (params?.contentType) {
+      headers['Content-Type'] = params?.contentType
     }
     if (params?.accessToken) {
       headers['Authorization'] = `Bearer ${params.accessToken}`

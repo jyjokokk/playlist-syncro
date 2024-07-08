@@ -7,9 +7,9 @@ import axios from 'axios'
 export class SpotifyConnection extends ServiceConnection {
   protected readonly config: ConfigLiterals
 
-  async requestToken(): Promise<string> {
+  async requestToken(): Promise<any> {
     const r = await apiSpotify.getToken()
-    return r.access_token
+    return r
   }
 
   async getUser(token: string): Promise<string> {
@@ -24,6 +24,11 @@ export class SpotifyConnection extends ServiceConnection {
     } catch (error) {
       console.log('getUser failed:', error)
     }
+  }
+
+  async getTrack(token: string, trackId: string): Promise<any> {
+    const trackData = await apiSpotify.getTrack(token, trackId)
+    return trackData
   }
 
   getPlaylistTracks(playlistId: string): void {
