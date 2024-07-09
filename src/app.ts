@@ -16,7 +16,6 @@ class App {
     app.use('/', (_req, res) => {
       res.send('Hello World')
     })
-    app.listen(3030)
     console.log('listening on port 3030')
   }
 }

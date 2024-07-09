@@ -19,6 +19,7 @@ class ConfigStoreService implements ConfigService {
     const CLIENT_ID = process.env.CLIENT_ID
     const CLIENT_SECRET = process.env.CLIENT_SECRET
     const ACCESS_TOKEN = process.env.ACCESS_TOKEN
+    const SQLITE_PATH = process.env.SQLITE_PATH
 
     return {
       PORT,
@@ -29,7 +30,8 @@ class ConfigStoreService implements ConfigService {
       LOCAL_DATABASE_PATH,
       CLIENT_ID,
       CLIENT_SECRET,
-      ACCESS_TOKEN
+      ACCESS_TOKEN,
+      SQLITE_PATH
     }
   }
 

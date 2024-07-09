@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./../.local/prisma_sql.db"
+}
+
+model User {
+  id          String       @id @default(cuid())
+  email       String       @unique
+  isAdmin     Boolean      @default(false)
+  name        String?
+  AccessToken AccessToken?
+}
+
+model AccessToken {
+  id        String   @id @default(cuid())
+  token     String
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  Service   Service  @relation(fields: [serviceId], references: [id])
+  serviceId String   @unique
+}
+
+model Service {
+  id        String        @id @default(cuid())
+  name      String
+  apiUrl    String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  userId    String
+  tokens    AccessToken[]
+}
