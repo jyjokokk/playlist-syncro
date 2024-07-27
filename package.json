@@ -15,7 +15,8 @@
     "dev": "nodemon src/index.ts",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "test:watch:cov": "jest --watch --coverage"
+    "test:watch:cov": "jest --watch --coverage",
+    "migration:generate": "./prisma-migrate.sh"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
