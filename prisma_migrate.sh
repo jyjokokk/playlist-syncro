@@ -20,13 +20,24 @@ execute_logic() {
     local dump_file=$2
 
     if [[ -n "$database" && -n "$dump_file" ]]; then
-        ./sqlite3_dumper.py -d $database -f $dump_file
+        cp "$database" backup.db
+        make_sql_dump "$database" "$dump_file"
+        ./sqlite3_dumper.py -d "$database" -f "$dump_file"
+        npx prisma migrate dev --name $migration_name
     elif [[ -n "$database" ]]; then
-        ./sqlite3_dumper.py -d $database
+        cp "$database" backup.db
+        make_sql_dump "$database" "$DUMP_PATH"
+        ./sqlite3_dumper.py -d "$database"
+        npx prisma migrate dev --name "$migration_name"
     elif [[ -n "$dump_file" ]]; then
-        ./sqlite3_dumper.py -f $dump_file
+        cp "$DATABASE_PATH" backup.db
+        make_sql_dump "$DATABASE_PATH" "$DUMP_PATH"
+        ./sqlite3_dumper.py -f "$dump_file"
+        npx prisma migrate dev --name "$migration_name"
     else
+        cp "$DATABASE_PATH" backup.db
         ./sqlite3_dumper.py
+        npx prisma migrate dev --name "$migration_name"
     fi
 }
 
