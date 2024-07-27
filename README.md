@@ -5,7 +5,23 @@
 
 Service for managing and synchronising playlists over different streaming services.
 
-Written in TypeScript using [NestJS][nestjs], extended with [nest-commander][nest-commander] to provide CLI functionality.
+Written in TypeScript using [Express 4](https://expressjs.com/) and [Prisma](https://prisma.io/).
+
+---
+
+## Table of Contents
+
+- [nest-playlist-sync](#nest-playlist-sync)
+  - [Table of Contents](#table-of-contents)
+  - [Development](#development)
+    - [Prerequisites](#prerequisites)
+      - [Required](#required)
+      - [Optional](#optional)
+    - [Installing and running locally](#installing-and-running-locally)
+    - [Testing](#testing)
+    - [Code Style \& Linting](#code-style--linting)
+    - [Versioning](#versioning)
+  - [License](#license)
 
 ---
 
@@ -17,10 +33,19 @@ for notes on deploying the project on a live system.
 
 ### Prerequisites
 
-Requirements for the software and other tools to build, test and push
+Requirements for the software and other tools to build, test and push.
+
+#### Required
 
 - [node](https://nodejs.org)
 - [yarn](https://yarnpkg.com) > 1.22.0
+
+#### Optional
+
+- [Python 3.11](https://www.python.org)
+  - Only needed if you plan to run data or schema migrations using the `yarn prisma:migration` command.
+- [sqlite3](https://sqlite.org/)
+  - Also only needed if running screma or data migrations.
 
 ### Installing and running locally
 
@@ -44,8 +69,8 @@ For unit tests, run `yarn test` (use `yarn test:watch` for development), and `ya
 
 ### Code Style & Linting
 
-Use the provided [ESLint][eslint] and [Prettier][prettier] configurations to enforce code style.
-ESLint configuration is provided, and should be automatically picked up by most IDEs.
+Uses [ESLint][eslint] and [Prettier][prettier] to enforce code style and formating. Configurations are provided, and should be automatically picked up by most IDEs.
+
 To run analysis on all source files in the repository, you can run `yarn lint`.
 
 The project is set to run Prettier to all staged files in a pre-commit hook via [Husky](https://github.com/typicode/husky), but if you want to manually trigger formating on all files, run `yarn format`.
@@ -64,18 +89,16 @@ of conduct, and the process for submitting pull requests to us. -->
 We use [Semantic Versioning](http://semver.org/) for versioning. For the versions
 available, see the [tags on this repository](https://github.com/jyjokokk/nest-playlist-sync/tags).
 
-### Built With
+<!-- ### Built With
 
 - [NestJS][nestjs] - Framework for building efficient, scalable Node.js server-side applications.
-- [nest-commander][nest-commander] - Package that extends NestJS by providing tooling and dependencies for running a NestJS application instance as a CLI application.
+- [nest-commander][nest-commander] - Package that extends NestJS by providing tooling and dependencies for running a NestJS application instance as a CLI application. -->
 
 ---
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for more details.
 
-[nestjs]: https;//nestjs.com
-[nest-commander]: https://nest-commander.jaymcdoniel.dev/
 [eslint]: https://eslint.org/
 [prettier]: https://prettier.io/

@@ -73,6 +73,7 @@ Temporary Items
 # Local development environment
 /.env
 /.local/*
+/local/*
 
 # allow .gitkeep files
 !/**/.gitkeep
@@ -90,3 +91,5 @@ test/coverage
 **/*.sqlite3
 **/*.db
 **/*.sqlite
+
+**/*.session.sql

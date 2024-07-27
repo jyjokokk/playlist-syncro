@@ -1,8 +1,7 @@
-// import repositoryService from './repository/repository.service'
-import app from './services/server'
+import server from './services/server'
 
 const dependencies = {
-  app
+  server
 }
 type Dependencies = typeof dependencies
 
@@ -12,8 +11,8 @@ class App {
   }
 
   async execute(): Promise<void> {
-    const { app } = this.dependencies
-    app.use('/', (_req, res) => {
+    const { server } = this.dependencies
+    server.use('/', (_req, res) => {
       res.send('Hello World')
     })
     console.log('listening on port 3030')
