@@ -1,3 +1,4 @@
+// TODO: Implement Prisma querying and then write a wrapper to decouple it
 import { JSONFileContent } from '../utils/types/json-file.interface'
 import { readJSONFile, writeJSONFile } from '../utils/read-and-write-files.util'
 import { Store } from './store.class'

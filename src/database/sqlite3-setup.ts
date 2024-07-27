@@ -1,3 +1,4 @@
+// TODO: Remove once ORM has been setup
 import sqlite3 from 'sqlite3'
 import configService from '../config/config.service'
 
