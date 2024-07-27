@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# Initialize variables
+database_path=""
+dump_file_path=""
+migration_name=""
+
+function show_help() {
+  ./sqlite3_dumper.py -h
+}
+
+function make_sql_dump() {
+    # ensure file exists and is empty
+    echo "" > $2
+    sqlite3 $1 .dump > $2
+}
+
+execute_logic() {
+    local database=$1
+    local dump_file=$2
+
+    if [[ -n "$database" && -n "$dump_file" ]]; then
+        echo "Both -d (database) and -f (dump_file) were provided."
+        echo "Database: $database"
+        echo "Dump file: $dump_file"
+        echo "Migration name: $migration_name"
+        # Add logic_one here
+    elif [[ -n "$database" ]]; then
+        echo "Only -d (database) was provided."
+        echo "Database: $database"
+        echo "Migration name: $migration_name"
+        # Add logic_two here
+    elif [[ -n "$dump_file" ]]; then
+        echo "Only -f (dump_file) was provided."
+        echo "Dump file: $dump_file"
+        echo "Migration name: $migration_name"
+        # Add logic_three here
+    else
+        echo "Only migration name was provided"
+        echo "Migration name: $migration_name"
+    fi
+}
+
+while [[ "$1" =~ ^- ]]; do
+    case $1 in
+        -d|--database-path)
+            if [[ $2 && ! $2 =~ ^- ]]; then
+                database_path=$2
+                shift
+            else
+                echo "Error: Option -d|--database-path requires an argument." >&2
+                show_help
+            fi
+            ;;
+        -f|--dump-file)
+            if [[ $2 && ! $2 =~ ^- ]]; then
+                dump_file_path=$2
+                shift
+            else
+                echo "Error: Option -f|--dump-file-path requires an argument." >&2
+                show_help
+            fi
+            ;;
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        *)
+            echo "Invalid option: $1" >&2
+            show_help
+            ;;
+    esac
+    shift
+done
+
+# Check if the mandatory argument is provided
+if [ $# -lt 1 ]; then
+    echo "Migration name is required!" >&2
+    show_help
+fi
+
+migration_name=$1
+
+execute_logic "$database_path" "$dump_file_path"
