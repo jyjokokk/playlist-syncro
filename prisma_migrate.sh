@@ -20,24 +20,13 @@ execute_logic() {
     local dump_file=$2
 
     if [[ -n "$database" && -n "$dump_file" ]]; then
-        echo "Both -d (database) and -f (dump_file) were provided."
-        echo "Database: $database"
-        echo "Dump file: $dump_file"
-        echo "Migration name: $migration_name"
-        # Add logic_one here
+        ./sqlite3_dumper.py -d $database -f $dump_file
     elif [[ -n "$database" ]]; then
-        echo "Only -d (database) was provided."
-        echo "Database: $database"
-        echo "Migration name: $migration_name"
-        # Add logic_two here
+        ./sqlite3_dumper.py -d $database
     elif [[ -n "$dump_file" ]]; then
-        echo "Only -f (dump_file) was provided."
-        echo "Dump file: $dump_file"
-        echo "Migration name: $migration_name"
-        # Add logic_three here
+        ./sqlite3_dumper.py -f $dump_file
     else
-        echo "Only migration name was provided"
-        echo "Migration name: $migration_name"
+        ./sqlite3_dumper.py
     fi
 }
 
@@ -80,5 +69,7 @@ if [ $# -lt 1 ]; then
 fi
 
 migration_name=$1
+
+echo "MIGRATION NAME $1"
 
 execute_logic "$database_path" "$dump_file_path"

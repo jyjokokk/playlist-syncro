@@ -11,11 +11,11 @@ datasource db {
 }
 
 model User {
-  id          String       @id @default(cuid())
-  email       String       @unique
-  isAdmin     Boolean      @default(false)
+  id          String        @id @default(cuid())
+  email       String        @unique
+  isAdmin     Boolean       @default(false)
   name        String?
-  AccessToken AccessToken?
+  AccessToken AccessToken[]
 }
 
 model AccessToken {
@@ -35,6 +35,5 @@ model Service {
   updatedAt DateTime      @updatedAt
   name      String
   apiUrl    String
-  userId    String
   tokens    AccessToken[]
 }

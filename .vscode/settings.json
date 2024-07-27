@@ -18,5 +18,6 @@
       "database": "${workspaceFolder:playlist-syncro}/local/prisma_sql.db",
       "name": "Local"
     }
-  ]
+  ],
+  "sqltools.sessionFilesFolder": "/Users/jkoutshine/Code/JavaScript/playlist-syncro/local"
 }
