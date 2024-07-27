@@ -18,6 +18,7 @@
     "test:watch:cov": "jest --watch --coverage"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.4",
